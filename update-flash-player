@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Download the installer from https://get.adobe.com/flashplayer/ and place the .tar.gz file in the same directory as this script
+
+PLUGIN_FOLDER=/usr/lib/firefox-addons/plugins
+UNCOMPRESS=flash-uncompress
+
+mkdir ${UNCOMPRESS}
+
+tar -zxvf $1 -C ${UNCOMPRESS} # uncompress the installer
+cd ${UNCOMPRESS}
+
+sudo cp libflashplayer.so ${PLUGIN_FOLDER}
+sudo cp -r usr/* /usr
+
+rm -rf ${UNCOMPRESS}
