@@ -1,0 +1,57 @@
+#!/usr/bin/python
+
+import sys
+
+if (not("on" in sys.argv or "off" in sys.argv)):
+    print "Usage: sudo ./slave_driver OPTION"
+    print "where OPTION is either 'on' or 'off'"
+    sys.exit(1)
+
+toggle = "on" in sys.argv
+
+blocked_sites = ["www.facebook.com", "gmail.com", "mail.google.com", "www.reddit.com"]
+
+if toggle:
+    print(blocked_sites)
+
+block_start = "# custom"
+block_end = "# end of custom"
+
+f = open("/etc/hosts", "r") # open the file for reading
+lines = f.readlines()
+f.close()
+
+f = open("/etc/hosts", "wb+") # overwrites the existing file
+
+# write back the normal lines before blocked list
+i = 0
+while i < len(lines):
+    current_line = lines[i]
+    i += 1
+    if block_start in current_line:
+        break
+    else:
+        f.write(current_line)
+
+f.write(block_start+'\n') # start the custom block
+
+# if true, then write the blocked sites into the file
+if toggle:
+    for site in blocked_sites:
+        f.write("127.0.0.1 " + site+'\n')
+
+f.write(block_end+'\n') # end the custom block
+
+# get to the end of the blocked list
+while i < len(lines):
+    current_line = lines[i]
+    i += 1
+    if block_end in current_line:
+        break
+
+# and write back everything after the custom block
+while i < len(lines):
+    f.write(lines[i])
+    i += 1  
+
+f.close()
