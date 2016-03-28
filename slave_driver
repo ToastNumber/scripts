@@ -1,5 +1,12 @@
 #!/usr/bin/python
 
+################################################################
+# Disables access to a specified list of websites by adding    #
+# 127.0.0.1 www.website-name.com                               #
+# to the /etc/hosts file.                                      #
+# Activated by running ./slave_driver on or ./slave_driver off #
+################################################################
+
 # might need to restart network service if used too many times 
 # (not sure if this is necessary, but one time nothing the blocks weren't applied):
 # `sudo service network-manager restart`

@@ -1,3 +1,8 @@
+###################################################################
+# Compiles a Graphviz dot source file to the selected destination #
+# format, e.g. pdf, png, etc.                                     #
+###################################################################
+
 EXT = # put extension here, e.g. pdf, png, etc.
 FNAME = # put source file name here without the .gv extension
 

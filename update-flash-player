@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# Download the installer from https://get.adobe.com/flashplayer/ and place the .tar.gz file in the same directory as this script
+##################################################
+# Updates the system's version of flash player   #
+# You will need to download the installer from   #
+# https://get.adobe.com/flashplayer/ and place   #
+# the .tar.gz file in the same directory as this #
+# script                                         #
+##################################################
 
 PLUGIN_FOLDER=/usr/lib/firefox-addons/plugins
 UNCOMPRESS=flash-uncompress
