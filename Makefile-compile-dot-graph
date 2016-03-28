@@ -1,0 +1,10 @@
+EXT = # put extension here, e.g. pdf, png, etc.
+FNAME = # put source file name here without the .gv extension
+
+all: render open
+
+render:
+	dot -T${EXT} ${FNAME}.gv -o ${FNAME}.${EXT}
+
+open:
+	xdg-open ${FNAME}.${EXT}

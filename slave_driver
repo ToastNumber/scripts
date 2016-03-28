@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+# might need to restart network service if used too many times 
+# (not sure if this is necessary, but one time nothing the blocks weren't applied):
+# `sudo service network-manager restart`
+# this might be useful: `sudo /etc/init.d/nscd restart`, but untried
+
 import sys
 
 if (not("on" in sys.argv or "off" in sys.argv)):
@@ -9,7 +14,7 @@ if (not("on" in sys.argv or "off" in sys.argv)):
 
 toggle = "on" in sys.argv
 
-blocked_sites = ["www.facebook.com", "gmail.com", "mail.google.com", "www.reddit.com"]
+blocked_sites = ["www.facebook.com", "gmail.com", "mail.google.com", "www.reddit.com", "www.youtube.com"]
 
 if toggle:
     print(blocked_sites)
