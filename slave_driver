@@ -21,7 +21,7 @@ if (not("on" in sys.argv or "off" in sys.argv)):
 
 toggle = "on" in sys.argv
 
-blocked_sites = ["www.facebook.com", "gmail.com", "mail.google.com", "www.reddit.com", "www.youtube.com"]
+blocked_sites = ["www.facebook.com", "gmail.com", "mail.google.com", "www.reddit.com", "www.youtube.com", "www.messenger.com"]
 
 if toggle:
     print(blocked_sites)
