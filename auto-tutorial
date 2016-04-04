@@ -78,7 +78,12 @@ f.close()
 global_line = 0
 
 page_start = max(0, line_index_of("#start-page#", lines))
-page_end = min(len(lines)-1, line_index_of("#end-page#", lines))
+
+page_end_line = line_index_of("#end-page#", lines)
+if page_end_line >= 0:
+    page_end = page_end_line
+else:
+    page_end = len(lines) - 1
 
 if (page_start > page_end):
     print("Page start is after page end")
@@ -98,8 +103,6 @@ while lines[page_end].strip() == "":
     page_end -= 1
 
 lines = lines[page_start:page_end+1]
-
-f = open("output.md", "w+")
 
 ignoring = False
 texting = False
@@ -124,19 +127,20 @@ for line in lines:
             text_start = i
             if code_encountered:
                 # Write all previous lines as code
-                f.write("```" + language + "\n")
-                f.write(formatBlock("".join(lines[text_end+1:i])))
-                f.write("```\n\n")
+                print("```" + language)
+                print(formatBlock("".join(lines[text_end+1:i])))
+                print("```\n")
         elif "#end-text#" in line:
             if texting:
                 texting = False
                 # Write all lines between #start-text# and #end-text#
-                f.write(formatBlock("".join(lines[text_start+1:i])) + "\n")
+                print(formatBlock("".join(lines[text_start+1:i])))
                 text_end = i
+                code_encountered = False
             else:
                 print_err(global_line, "#end-text# with no #start-text#")
                 sys.exit(1)
-        else:
+        elif line.strip():
             code_encountered = True
     i += 1
     global_line += 1
@@ -147,7 +151,7 @@ elif texting:
     print_err(global_line, "#start-text# block not closed")
 elif text_end < len(lines) - 1:
     # Write any code left
-    f.write("```" + language + "\n")
-    f.write(formatBlock("".join(lines[text_end+1:i])))
-    f.write("```\n\n")
+    print("```" + language)
+    print(formatBlock("".join(lines[text_end+1:i])).rstrip())
+    print("```\n")
 
