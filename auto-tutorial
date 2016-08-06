@@ -83,7 +83,7 @@ page_end_line = line_index_of("#end-page#", lines)
 if page_end_line >= 0:
     page_end = page_end_line
 else:
-    page_end = len(lines) - 1
+    page_end = len(lines)
 
 if (page_start > page_end):
     print("Page start is after page end")
@@ -114,6 +114,12 @@ code_encountered = False
 for line in lines:
     if "#start-ignore#" in line:
         ignoring = True
+        if code_encountered:
+            # Write all previous lines as code
+            print("```" + language)
+            print(formatBlock("".join(lines[text_end+1:i])))
+            print("```\n")
+            code_encountered = False
     elif "#end-ignore#" in line:
         if ignoring:
             ignoring = False
@@ -130,6 +136,7 @@ for line in lines:
                 print("```" + language)
                 print(formatBlock("".join(lines[text_end+1:i])))
                 print("```\n")
+                code_encountered = False
         elif "#end-text#" in line:
             if texting:
                 texting = False
